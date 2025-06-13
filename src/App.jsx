@@ -30,6 +30,10 @@ const App = () => {
   const queryClient = new QueryClient();
   return (
     <QueryClientProvider client={queryClient}>
+      {
+          //like use context hook you also need to wrap it so other components can access its function 
+      }
+
       <RouterProvider router={Routes}>React Query</RouterProvider>
     </QueryClientProvider>
   );
