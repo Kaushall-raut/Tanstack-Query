@@ -19,7 +19,8 @@ export const FetchRq = () => {
 
     // staleTime: 10000, // stale the api data after 10 sec after 10 sec it will again hit the api for new data
 
-    refetchInterval: 2000, //hit api after every 2 seconds known as polling it tanstack query
+    // refetchInterval: 2000, //hit api after every 2 seconds known as polling it tanstack query
+    refetchIntervalInBackground: 2000, //hit api after 2 second even user is on another tab
   });
 
   if (isLoading) {
