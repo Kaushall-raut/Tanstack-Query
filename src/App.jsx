@@ -4,7 +4,7 @@ import { Home } from "./pages/Home";
 import { FetchOld } from "./pages/FetchOld";
 import { FetchRq } from "./pages/FetchRq";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
+// import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 const Routes = createBrowserRouter([
   {
@@ -34,11 +34,11 @@ const App = () => {
       {
         //like use context hook you also need to wrap it so other components can access its function
       }
-      <TanStackRouterDevtools />{" "}
+      {/* <ReactQueryDevtools /> */}
       {
-        //this will activate the dev tool option on the browser which help to understand the working of the tanstack
+        //this will activate the dev tool option on the browser which help to understand the working of the tanstack but it does not work with react router
       }
-      <RouterProvider router={Routes}>React Query</RouterProvider>
+      <RouterProvider router={Routes}></RouterProvider>
     </QueryClientProvider>
   );
 };

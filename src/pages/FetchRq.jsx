@@ -12,11 +12,12 @@ export const FetchRq = () => {
     }
   };
 
-
-
   const { data, isLoading } = useQuery({
     queryKey: ["post"], //it work as an useState hook
     queryFn: axiosData, //it work as an use Effect hook
+    gcTime: 10000, //clear local cache after every 10 sec
+
+    staleTime: 10000, // stale the api data after 10 sec after 10 sec it will again hit the api for new data
   });
 
   if (isLoading) {
