@@ -4,8 +4,10 @@ const api = axios.create({
   baseURL: "https://jsonplaceholder.typicode.com/",
 });
 
-export const get = () => {
-  return api.get("posts");
+export const get = (pageNumber) => {
+  // console.log("page", pageNumber);
+
+  return api.get(`posts?_start=${pageNumber}&_limit=3`);
 };
 
 //fetching single data

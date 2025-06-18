@@ -7,12 +7,16 @@ export const FetchSingle = () => {
   console.log(id);
 
   //   const fetch = () => {};
-  const { data } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ["posts"],
     queryFn: () => getSingle(id),
   });
 
   console.log(data);
+
+  if (isLoading) {
+    return <h1>Loading ...</h1>;
+  }
 
   return (
     <section className="axios-section">

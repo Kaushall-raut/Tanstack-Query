@@ -1,25 +1,30 @@
 import { NavLink } from "react-router-dom";
 import { get } from "../api/axios";
-import { useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
+import { useState } from "react";
 
 export const FetchRq = () => {
+  const [pageNumber, setNumber] = useState(0);
+
   const axiosData = async () => {
     try {
-      const res = await get();
+      const res = await get(pageNumber);
+      // console.log("res", res.data);
 
       return res.data;
     } catch (error) {
       console.log(error);
     }
   };
+  // console.log("p", pageNumber);
 
   const { data, isLoading } = useQuery({
-    queryKey: ["post"], //it work as an useState hook
-    queryFn: axiosData, //it work as an use Effect hook
+    queryKey: ["post", pageNumber], //it work as an useState hook  note-after passing pagenumber it will recall the function whenever its value gets changed
+    queryFn: axiosData, //it work as an use Effect hook  note- if you are not passing anything then dont use parenthesis with function name
     // gcTime: 10000, //clear local cache after every 10 sec
 
     // staleTime: 10000, // stale the api data after 10 sec after 10 sec it will again hit the api for new data
-
+    placeholderData: keepPreviousData, //it will keep the previous page data so it will not hit the api again
     // refetchInterval: 2000, //hit api after every 2 seconds known as polling it tanstack query
     refetchIntervalInBackground: 2000, //hit api after 2 second even user is on another tab
   });
@@ -27,7 +32,7 @@ export const FetchRq = () => {
   if (isLoading) {
     return <h1>Loading...</h1>;
   }
-  console.log(data);
+  console.log("data", data);
 
   return (
     <section className="axios-section">
@@ -44,6 +49,18 @@ export const FetchRq = () => {
           );
         })}
       </ul>
+
+      <div className="section-btn">
+        <button
+          disabled={pageNumber == 0 ? true : false}
+          onClick={() => setNumber((prev) => prev - 3)}
+        >
+          Prev
+        </button>
+
+        <h3>{pageNumber / 3 + 1}</h3>
+        <button onClick={() => setNumber((prev) => prev + 3)}> Next</button>
+      </div>
     </section>
   );
 };

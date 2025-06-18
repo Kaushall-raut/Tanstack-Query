@@ -51,4 +51,23 @@ a {
   padding: 2rem;
   background-color: #261d37;
   border-left: 3px solid blue;
+  min-width: 42rem;
+}
+
+.section-btn {
+  height: 5rem;
+  display: flex;
+   justify-content: center;
+   align-items: center;
+   gap: 3rem;
+}
+button{
+  padding: 1rem;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 700;
+  color: white;
+  background-color: #2fa0f1;
+  border:  0;
+  cursor: pointer;
 }
