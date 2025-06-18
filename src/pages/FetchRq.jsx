@@ -1,3 +1,4 @@
+import { NavLink } from "react-router-dom";
 import { get } from "../api/axios";
 import { useQuery } from "@tanstack/react-query";
 
@@ -26,6 +27,7 @@ export const FetchRq = () => {
   if (isLoading) {
     return <h1>Loading...</h1>;
   }
+  console.log(data);
 
   return (
     <section className="axios-section">
@@ -34,8 +36,10 @@ export const FetchRq = () => {
           const { id, title } = value;
           return (
             <li className="grid" key={id}>
-              <h1>{id}</h1>
-              <p>{title}</p>
+              <NavLink to={`/reactquery/${id}`}>
+                <h1>{id}</h1>
+                <p>{title}</p>
+              </NavLink>
             </li>
           );
         })}
