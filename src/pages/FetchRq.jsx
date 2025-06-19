@@ -1,6 +1,11 @@
 import { NavLink } from "react-router-dom";
-import { get } from "../api/axios";
-import { keepPreviousData, useQuery } from "@tanstack/react-query";
+import { deleteData, get } from "../api/axios";
+import {
+  keepPreviousData,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
 import { useState } from "react";
 
 export const FetchRq = () => {
@@ -9,14 +14,14 @@ export const FetchRq = () => {
   const axiosData = async () => {
     try {
       const res = await get(pageNumber);
-      // console.log("res", res.data);
 
       return res.data;
     } catch (error) {
       console.log(error);
     }
   };
-  // console.log("p", pageNumber);
+
+  const queryClient = useQueryClient();
 
   const { data, isLoading } = useQuery({
     queryKey: ["post", pageNumber], //it work as an useState hook  note-after passing pagenumber it will recall the function whenever its value gets changed
@@ -29,10 +34,20 @@ export const FetchRq = () => {
     refetchIntervalInBackground: 2000, //hit api after 2 second even user is on another tab
   });
 
+  const mutation = useMutation({
+    mutationFn: (id) => deleteData(id),
+    onSuccess: (data, id) => {
+      queryClient.setQueryData(["post", pageNumber], (value) => {
+        return value?.filter((current) => {
+          return current.id !== id;
+        });
+      });
+    },
+  });
+
   if (isLoading) {
     return <h1>Loading...</h1>;
   }
-  console.log("data", data);
 
   return (
     <section className="axios-section">
@@ -45,6 +60,9 @@ export const FetchRq = () => {
                 <h1>{id}</h1>
                 <p>{title}</p>
               </NavLink>
+              <button className="dlt" onClick={() => mutation.mutate(id)}>
+                delete
+              </button>
             </li>
           );
         })}

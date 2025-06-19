@@ -43,7 +43,7 @@ a {
 }
 .grid {
   display: grid;
-  grid-template-columns: 0.5fr 0.5fr;
+  grid-template-columns: 0.5fr;
   font-size: 1.2rem;
   gap: 1rem;
   margin-bottom: 1rem;
@@ -57,17 +57,29 @@ a {
 .section-btn {
   height: 5rem;
   display: flex;
-   justify-content: center;
-   align-items: center;
-   gap: 3rem;
+  justify-content: center;
+  align-items: center;
+  gap: 3rem;
 }
-button{
-  padding: 1rem;
-  border-radius: 10px;
-  font-size: 1rem;
-  font-weight: 700;
+.section-btn {
+  button {
+    padding: 1rem;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 700;
+    color: white;
+    background-color: #2fa0f1;
+    border: 0;
+    cursor: pointer;
+  }
+}
+
+.dlt {
+  max-width: 4rem;
+  height: 2rem;
   color: white;
-  background-color: #2fa0f1;
-  border:  0;
+  border: 0;
   cursor: pointer;
+  background-color: red;
+  border-radius: 10px;
 }

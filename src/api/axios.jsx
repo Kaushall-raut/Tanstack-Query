@@ -18,3 +18,9 @@ export const getSingle = async (id) => {
 
   return res.data;
 };
+
+//delete data
+
+export const deleteData = (id) => {
+  return api.delete(`posts/${id}`);
+};
