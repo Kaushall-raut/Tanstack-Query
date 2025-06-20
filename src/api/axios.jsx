@@ -24,3 +24,8 @@ export const getSingle = async (id) => {
 export const deleteData = (id) => {
   return api.delete(`posts/${id}`);
 };
+
+//update data
+export const updateData = (id) => {
+  return api.put(`posts/${id}`, { title: "data updated" });
+};

@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { deleteData, get } from "../api/axios";
+import { deleteData, get, updateData } from "../api/axios";
 import {
   keepPreviousData,
   useMutation,
@@ -45,6 +45,21 @@ export const FetchRq = () => {
     },
   });
 
+  const updateMutation = useMutation({
+    mutationFn: (id) => updateData(id),
+    onSuccess: (data, id) => {
+      console.log(data);
+
+      queryClient.setQueryData(["post", pageNumber], (value) => {
+        return value?.map((updateValue) => {
+          return updateValue.id === id
+            ? { ...updateValue, title: data.data.title } //updating front end
+            : updateValue;
+        });
+      });
+    },
+  });
+
   if (isLoading) {
     return <h1>Loading...</h1>;
   }
@@ -60,9 +75,17 @@ export const FetchRq = () => {
                 <h1>{id}</h1>
                 <p>{title}</p>
               </NavLink>
-              <button className="dlt" onClick={() => mutation.mutate(id)}>
-                delete
-              </button>
+              <div>
+                <button className="dlt" onClick={() => mutation.mutate(id)}>
+                  delete
+                </button>
+                <button
+                  className="dlt"
+                  onClick={() => updateMutation.mutate(id)}
+                >
+                  update
+                </button>
+              </div>
             </li>
           );
         })}
