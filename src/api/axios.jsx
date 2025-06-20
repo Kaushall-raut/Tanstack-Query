@@ -29,3 +29,12 @@ export const deleteData = (id) => {
 export const updateData = (id) => {
   return api.put(`posts/${id}`, { title: "data updated" });
 };
+
+//api for infinite scrolling
+
+export const InfiniteApi = async ({ pageParam = 1 }) => {
+  const res = await axios.get(
+    `https://api.github.com/users?per_page=10&page=${pageParam}`
+  );
+  return res.data;
+};

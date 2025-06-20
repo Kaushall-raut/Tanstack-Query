@@ -17,6 +17,9 @@ export const Header = () => {
               <li>
                 <NavLink to="/reactquery">React Query</NavLink>
               </li>
+              <li>
+                <NavLink to="/infinite">Infinite scrolling</NavLink>
+              </li>
             </ul>
           </nav>
         </div>
