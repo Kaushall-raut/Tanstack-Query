@@ -1,6 +1,7 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { InfiniteApi } from "../api/axios";
 import { useEffect } from "react";
+import { useInView } from "react-intersection-observer";
 
 export const InfiniteScrolling = () => {
   const { data, fetchNextPage, hasNextPage } = useInfiniteQuery({
@@ -12,20 +13,30 @@ export const InfiniteScrolling = () => {
   });
 
   //adding infinite scrolling feature with js
-  const handleScroll = () => {
-    const bottom =
-      window.innerHeight + window.scrollY >=
-      document.documentElement.scrollHeight - 2;
+  // const handleScroll = () => {
+  //   const bottom =
+  //     window.innerHeight + window.scrollY >=
+  //     document.documentElement.scrollHeight - 2;
 
-    if (bottom && hasNextPage) {
-      fetchNextPage();
-    }
-  };
+  //   if (bottom && hasNextPage) {
+  //     fetchNextPage();
+  //   }
+  // };
+
+  const { ref, inView } = useInView({
+    threshold: 1,
+  });
 
   useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [hasNextPage]);
+    //with javascript
+    // window.addEventListener("scroll", handleScroll);
+    // return () => window.removeEventListener("scroll", handleScroll);
+    //with react intersection observer
+
+    if (inView && hasNextPage) {
+      fetchNextPage();
+    }
+  }, [inView, fetchNextPage, hasNextPage]);
 
   return (
     <div className="section-infinite">
@@ -37,7 +48,7 @@ export const InfiniteScrolling = () => {
             <ul key={index}>
               {page.map((users) => {
                 return (
-                  <li key={index}>
+                  <li ref={ref} key={index}>
                     <p>User Name :{users.login}</p>
                     <img
                       src={users.avatar_url}
